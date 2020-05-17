@@ -219,7 +219,36 @@ public class BST<T extends Comparable<T>> {
      * search for the correct location
      * in which to insert
      */
-    private void insert(T data, Node node) {
+    private void insert(T data, Node node)
+    {
+        if(node.data.compareTo(root.data) <= 0)
+       {
+    	   if(node.left == null)
+    	   {
+    		   node = node.left;
+    	   }
+    	   else 
+    	   {
+    		   
+    	   }
+    		   
+    	 
+       }
+       else 
+       {
+    	   if(node.data.compareTo(root.data) > 0)
+    	   {
+    		   if(node.right == null)
+    		   {
+    			   node = node.right;
+    		   }
+    		   
+    	   }
+    	   else 
+    	   {
+    		   
+    	   }
+       }
        
     }
    
