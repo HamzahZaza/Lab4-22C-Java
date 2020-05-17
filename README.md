@@ -1,7 +1,7 @@
 /**
  * BST.java
- * @author
- * @author
+ * @Hamzah Zaza
+ * @
  * CIS 22C Lab 4
  */
 
@@ -12,7 +12,7 @@ public class BST<T extends Comparable<T>> {
         private T data;
         private Node left;
         private Node right;
-       
+        
         public Node(T data) {
             this.data = data;
             left = null;
@@ -20,6 +20,7 @@ public class BST<T extends Comparable<T>> {
         }
     }
    
+    
     private Node root;
    
     /***CONSTRUCTORS***/
@@ -29,7 +30,6 @@ public class BST<T extends Comparable<T>> {
      * sets root to null
      */
     public BST() {
-       
     }
    
     /**
@@ -60,7 +60,7 @@ public class BST<T extends Comparable<T>> {
      * preconditon is violated
      */
     public T getRoot() throws NoSuchElementException{
-        return null;
+        return root.data;
     }
    
     /**
@@ -200,11 +200,16 @@ public class BST<T extends Comparable<T>> {
    
     /**
      * Inserts a new node in the tree
+     * @precondition root != null
      * @param data the data to insert
      */
     public void insert(T data) {
-      
-    }
+        if (root == null) {
+            root = new Node(data);
+        } else  {
+            insert(data, root);
+        }
+        }
    
     /**
      * Helper method to insert
@@ -214,37 +219,13 @@ public class BST<T extends Comparable<T>> {
      * search for the correct location
      * in which to insert
      */
-    private void insert(T data, Node node)
-    {
-        if(node.data.compareTo(root.data) <= 0)
-       {
-    	   if(node.left == null)
-    	   {
-    		   node = node.left;
-    	   }
-    	   else 
-    	   {
-    		   
-    	   }
-    		   
-    	 
-       }
-       else 
-       {
-    	   if(node.data.compareTo(root.data) > 0)
-    	   {
-    		   if(node.right == null)
-    		   {
-    			   node = node.right;
-    		   }
-    		   
-    	   }
-    	   else 
-    	   {
-    		   
-    	   }
-       }
-       
+    private void insert(T data, Node node) {
+    	if(node.data.compareTo(root.data) <= 0) {
+    		insert(node.data, root.left);
+           }
+    	else if(node.data.compareTo(root.data) >= 0) {
+           	insert(node.data, root.right);
+           }
     }
    
     /**
