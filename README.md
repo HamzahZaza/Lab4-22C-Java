@@ -202,13 +202,8 @@ public class BST<T extends Comparable<T>> {
      * Inserts a new node in the tree
      * @param data the data to insert
      */
-    public void insert(T data)
-    {
-        if (root == null) {
-              root = new Node(data);
-          } else {
-              insert(data, root);
-          }  
+    public void insert(T data) {
+      
     }
    
     /**
