@@ -208,9 +208,9 @@ public class BST<T extends Comparable<T>> {
 	 * @return whether the data is stored in the tree
 	 */
 	private boolean search(T data, Node node) {
-		if (data.compareTo(node.data) == 0) {
+		if (data.equals(node.data)) {
 			return true;
-		} else if (data.compareTo(node.data) < 0) {
+		} else if (data.equals(node.data)) {
 			if (node.left == null) {
 				return false;
 			}
@@ -232,7 +232,16 @@ public class BST<T extends Comparable<T>> {
 	 */
 	@Override
 	public boolean equals(Object o) {
+		if (o ==this) {
+			return true;
+		}else if (!(o instanceof BST)) {
 		return false;
+	} else {
+		@SuppressWarnings("unchecked")
+		BST<T> L = (BST<T>) o;
+		return equals(root, L.root);
+	
+	}
 	}
 
 	/**
@@ -244,7 +253,13 @@ public class BST<T extends Comparable<T>> {
 	 *         structural position inside the trees
 	 */
 	private boolean equals(Node node1, Node node2) {
-		return false;
+		if (node1 == null && node2 == null) {
+			return true;
+		}else if(node1 == null || node2 == null) {
+			return false;
+		} else {
+			return node1.data.equals(node2.data) && equals(node1.left, node2.left) && equals(node1.right, node2.right);
+		}
 	}
 
 	/*** MUTATORS ***/
@@ -271,7 +286,7 @@ public class BST<T extends Comparable<T>> {
 	 *             to insert
 	 */
 	private void insert(T data, Node node) {
-		if (data.compareTo(node.data) <= 0) {
+		if (data.equals(node.data)) {
 			if (node.left == null) {
 				node.left = new Node(data);
 			} else {
