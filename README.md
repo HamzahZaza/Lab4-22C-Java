@@ -1,11 +1,8 @@
-
 /**
- * BST.java
- * @Hamzah Zaza
- * @
- * CIS 22C Lab 4
- */
-
+BST.java
+@Hamzah Zaza
+@
+CIS 22C Lab 4 */
 import java.util.NoSuchElementException;
 
 public class BST<T extends Comparable<T>> {
@@ -29,7 +26,6 @@ public class BST<T extends Comparable<T>> {
 	 * Default constructor for BST sets root to null
 	 */
 	public BST() {
-		root = null;
 	}
 
 	/**
@@ -54,11 +50,12 @@ public class BST<T extends Comparable<T>> {
 	private void copyHelper(Node node) {
 		if (node == null) {
 			return;
-		}
+		} else {
 		insert(node.data);
 		copyHelper(node.left);
 		copyHelper(node.right);
-	}
+		}
+		}
 
 	/*** ACCESSORS ***/
 
@@ -70,8 +67,13 @@ public class BST<T extends Comparable<T>> {
 	 * @throws NoSuchElementException when preconditon is violated
 	 */
 	public T getRoot() throws NoSuchElementException {
+		if(isEmpty())
+		{
+			throw new NoSuchElementException("getRoot: Tree is empty. No element to access.");
+		}
 		return root.data;
-	}
+		}
+	
 
 	/**
 	 * Determines whether the tree is empty
@@ -208,9 +210,9 @@ public class BST<T extends Comparable<T>> {
 	 * @return whether the data is stored in the tree
 	 */
 	private boolean search(T data, Node node) {
-		if (data.equals(node.data)) {
+		if (data.compareTo(node.data) == 0) {
 			return true;
-		} else if (data.equals(node.data)) {
+		} else if (data.compareTo(node.data) < 0) {
 			if (node.left == null) {
 				return false;
 			}
@@ -232,16 +234,16 @@ public class BST<T extends Comparable<T>> {
 	 */
 	@Override
 	public boolean equals(Object o) {
-		if (o ==this) {
+		if (o == this) {
 			return true;
-		}else if (!(o instanceof BST)) {
-		return false;
-	} else {
-		@SuppressWarnings("unchecked")
-		BST<T> L = (BST<T>) o;
-		return equals(root, L.root);
-	
-	}
+		} else if (!(o instanceof BST)) {
+			return false;
+		} else {
+			@SuppressWarnings("unchecked")
+			BST<T> L = (BST<T>) o;
+			return equals(root, L.root);
+
+		}
 	}
 
 	/**
@@ -255,7 +257,7 @@ public class BST<T extends Comparable<T>> {
 	private boolean equals(Node node1, Node node2) {
 		if (node1 == null && node2 == null) {
 			return true;
-		}else if(node1 == null || node2 == null) {
+		} else if (node1 == null || node2 == null) {
 			return false;
 		} else {
 			return node1.data.equals(node2.data) && equals(node1.left, node2.left) && equals(node1.right, node2.right);
@@ -286,7 +288,7 @@ public class BST<T extends Comparable<T>> {
 	 *             to insert
 	 */
 	private void insert(T data, Node node) {
-		if (data.equals(node.data)) {
+		if (data.compareTo(node.data) <= 0) {
 			if (node.left == null) {
 				node.left = new Node(data);
 			} else {
@@ -311,7 +313,6 @@ public class BST<T extends Comparable<T>> {
 	 * @throws NoSuchElementException when the precondition is violated
 	 */
 	public void remove(T data) throws NoSuchElementException {
-
 		if (root == null) {
 			root = new Node(data);
 		} else {
@@ -326,27 +327,25 @@ public class BST<T extends Comparable<T>> {
 	 * @param node the current node
 	 * @return an updated reference variable
 	 */
-	private Node remove(T data, Node node)  {
+	private Node remove(T data, Node node) {
 		if (node == null) {
-			return node;//cannot the data
-		} else if ( data.compareTo(node.data)< 0) {
-			node.left = remove(data,node.left);
-		} else if ( data.compareTo(node.data)> 0) {
+			return null;
+		} else if (data.compareTo(node.data) < 0) {
+			node.left = remove(data, node.left);
+		} else if (data.compareTo(node.data) > 0) {
 			node.right = remove(data, node.right);
+		} else {
+			if (node.left == null && node.right == null) {
+				node = null;
+			} else if (node.left != null && node.right == null) {
+				node = node.left;
+			} else if (node.left == null && node.right != null) {
+				node = node.right;
 			} else {
-				if (node.left==null && node.right == null) {
-				node.data = null;
-				}
-				else if (node.right == null && node.left != null){
-					node = node.left;
-				}
-				else if (node.left == null && node.right != null){
-					node = node.right;}
-		 else {
 				node.data = findMin(node.right);
 				node.right = remove(findMin(node.right), node.right);
+			}
 		}
-	}
 		return node;
 	}
 
@@ -416,5 +415,4 @@ public class BST<T extends Comparable<T>> {
 
 		}
 	}
-
 }
